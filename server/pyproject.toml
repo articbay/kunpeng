@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = "跨境电商数据采集和分析系统 - 后端"
+authors = ["Kunpeng Team"]
+readme = "README.md"
+packages = [{include = "kunpeng", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.109.0"
+uvicorn = {extras = ["standard"], version = "^0.26.0"}
+sqlalchemy = "^2.0.25"
+greenlet = "^3.0.0"
+asyncmy = "^0.2.9"
+pymysql = "^1.1.0"
+alembic = "^1.13.0"
+pydantic = {extras = ["email"], version = "^2.5.0"}
+pydantic-settings = "^2.1.0"
+email-validator = "^2.1.0"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+bcrypt = "^4.1.0"
+apscheduler = "^3.10.0"
+httpx = "^0.26.0"
+tenacity = "^8.2.0"
+python-multipart = "^0.0.6"
+structlog = "^24.1.0"
+playwright = "^1.61.0"
+openpyxl = "^3.1.5"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-asyncio = "^0.23.0"
+httpx = "^0.26.0"
+black = "^24.0.0"
+isort = "^5.13.0"
+mypy = "^1.8.0"
+
+[tool.pytest.ini_options]
+# 只从 tests 目录收集用例，避免误收集 scripts/ 下的 VS Code 调试入口
+# (scripts/test_sync_service_*.py 是 debugpy 启动脚本，不是 pytest 用例)
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "integration: 集成测试（真实调用 API）",
+    "wb: Wildberries 相关测试",
+    "ozon: Ozon 相关测试",
+    "scraper: 竞品抓取测试",
+    "hourly: 小时级同步任务测试",
+    "advert: 广告数据同步测试（Performance API，含耗时异步报表）",
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
